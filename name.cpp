@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
+#include <time.h>
+#include <windows.h>
 
 using namespace std;
+
+int getCurrentYear();
 
 class Book
 {
@@ -9,6 +13,7 @@ public:
     string title;
     string author;
     int year;
+    
 
     void print()
     {
@@ -29,14 +34,15 @@ public:
 
     Book()
     {
-        title = "Mertvie dyshi";
-        author = "Nikolay Gogol";
-        year = 1960;
+        title = "None";
+        author = "None";
+        year = 0;
     }
-
+ 
     bool isOld()
     {
-        if (year <= 1975)
+        int currentYear = getCurrentYear();
+        if (currentYear - 50 >= year)
         {
             cout << "Book is older(((" << endl;
             return true;
@@ -62,6 +68,7 @@ int main()
 
     cout << "Enter year: ";
     cin >> year;
+    cin.ignore();
 
     Book book1(title, author, year);
     Book book2("Voyna i myr", "Lev Tolstoy", 1974);
@@ -81,4 +88,11 @@ int main()
     book3.isOld();
 
     return 0;
+}
+
+int getCurrentYear()
+{
+    SYSTEMTIME tm;
+    GetLocalTime(&tm);
+    return tm.wYear;
 }
